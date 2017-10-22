@@ -1,10 +1,6 @@
 class LoansController < ApplicationController
   include LoansHelper
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    render json: 'not_found', status: :not_found
-  end
-
   def index
     @response = return_all_loans
     render json: @response
@@ -12,8 +8,8 @@ class LoansController < ApplicationController
 
   def show
     loan = Loan.find(params[:id])
-    payments = return_all_payments(loan)
-    funded_amount = calculate_loan_amount(loan)
+    payments = Loan.calculate_balance(loan)
+    funded_amount = Loan.find_payments(loan)
 
     @response = {
       outstanding_balance: funded_amount,

@@ -2,26 +2,24 @@ class PaymentsController < ApplicationController
   include PaymentsHelper
 
   def index
-    p params
-    @payments = Loan.find(params[:loan_id]).payments.map do |payment|
-      payment
-    end
-    render json: @payments
+    @response = return_all_payments(params)
+    render json: @response
   end
 
   def show
     account_id = params[:loan_id]
     payment_id = params[:id]
 
-    @payment = Loan.find(account_id).payments.find(payment_id)
-    render json: @payment
+    payment = Loan.find(account_id).payments.find(payment_id)
+
+    render json: payment
   end
 
   def create
     payment_info = params[:payment]
 
     account_id = payment_info[:loan_id]
-    payment_amount = payment_info[:amount]
+    payment_amount = Payment.payment_amount(payment_info)
 
     loan = Loan.find(account_id)
 
