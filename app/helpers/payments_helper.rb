@@ -1,10 +1,7 @@
 module PaymentsHelper
-  def calculate_payment(payment)
-    if !payment[:amount].instance_of? BigDecimal
-      'Funded Amount must be a Decimal'
-    else
-      payment[:amount].to_f
-    end
+  
+  def return_all_payments(params)
+    Loan.find(params[:loan_id]).payments.map {|payment| payment}
   end
 
   def excessive_payment(loan, payment_amount)
