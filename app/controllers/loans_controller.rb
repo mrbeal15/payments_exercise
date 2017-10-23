@@ -8,8 +8,8 @@ class LoansController < ApplicationController
 
   def show
     loan = Loan.find(params[:id])
-    payments = Loan.calculate_balance(loan)
-    funded_amount = Loan.find_payments(loan)
+    funded_amount = Loan.calculate_balance(loan)
+    payments = Loan.find_payments(loan)
 
     @response = {
       outstanding_balance: funded_amount,
