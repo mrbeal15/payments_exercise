@@ -20,7 +20,8 @@ module PaymentsHelper
     else
       pending_payment.save
       puts "Payment Accepted!"
-      new_funded_amount = loan.funded_amount - payment_amount
+      balance = Loan.calculate_balance(loan)
+      new_funded_amount = balance - payment_amount
       loan.update(funded_amount: new_funded_amount)
       puts "New Balance: #{loan.funded_amount}"
       loan

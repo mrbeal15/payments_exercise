@@ -7,7 +7,6 @@ class Loan < ActiveRecord::Base
     else
       loan[:"funded_amount"].to_f
     end
-
   end
 
   def self.find_payments(loan)
